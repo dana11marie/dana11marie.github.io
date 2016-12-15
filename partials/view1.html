@@ -1,0 +1,116 @@
+<div class="main">
+<div class="container">
+
+<!-- INTRO -->
+<p class="intro"> Not sure what to watch while your body carves the perfect imprint into your couch? Time passes quickly with something different to watch. Simply input your choices using the form below and you'll be reminded of or introduced to 10 movies or tv shows of days' past. Don't like what you see? Simply play again, it's that easy. </p>
+<!-- END INTRO -->
+
+<!-- FORM -->
+<div class="form">
+<form>
+  <fieldset>
+     <legend>Make Your Choice</legend>
+     <div class="form-text">
+	 <p>
+       <label>What do you want to watch?</label>
+         <input type="radio" ng-model="type" value= "tv">TV Show
+         <input type="radio" ng-model="type" value = "movie">Movie
+       </p>
+     <p>
+        <label>What genre do you want to watch?</label>
+        <select id="genre" ng-model="genre">
+          <option value = "28">Action</option>
+          <option value = "12">Adventure</option>
+          <option value = "16">Animation</option>
+          <option value = "35">Comedy</option>
+          <option value = "80">Crime</option>
+          <option value = "99">Documentary</option>
+          <option value = "18">Drama</option>
+          <option value = "10751">Family</option>
+          <option value = "27">Horror</option>
+          <option value = "10402">Music</option>
+          <option value = "9648">Mystery</option>
+          <option value = "10749">Romance</option>
+          <option value = "878">Science Fiction</option>
+          <option value = "10770">TV Movie</option>
+          <option value = "53">Thriller</option>
+          <option value = "10752">War</option>
+          <option value = "37">Western</option>
+        </select>
+     </p>
+     <p>
+        <label>What decade are you in the mood for?</label>
+        <input type="text" placeholder="(yyyy)" ng-model="startYear" />
+        <span>and</span>
+        <input type="text" placeholder="(yyyy)" ng-model="endYear" />
+     </p>
+       <p>
+          <label>Out of a 1-10 star scale, what rating do you want?</label>
+          <select id="rating" ng-model="rating">
+            <option value = "1">1+ ★</option>
+            <option value = "2">2+ ★</option>
+            <option value = "3">3+ ★</option>
+            <option value = "4">4+ ★</option>
+            <option value = "5">5+ ★</option>
+            <option value = "6">6+ ★</option>
+            <option value = "7">7+ ★</option>
+          </select>
+       </p>
+       <p>
+          <label>How much time do you have?</label>
+          <select id="runtime" ng-model="runtime">
+            <option value = "60">60 mins</option>
+            <option value = "75">75 mins</option>
+            <option value = "90">90 mins</option>
+            <option value = "105">105 mins</option>
+            <option value = "120">120 mins</option>
+            <option value = "135">135 mins</option>
+            <option value = "150">150 mins</option>
+            <option value = "165">165 mins</option>
+            <option value = "180">180 mins</option>
+            <option value = "195">195 mins</option>
+            <option value = "210">210 mins</option>
+			</select>
+		    <p class="required">★ All fields required</p>
+			</p>
+
+	   </div><!--end form-text-->
+    </fieldset>
+ </form>
+
+  <button class="button" ng-click="findMovie(type, genre, rating, startYear, endYear, runtime)">Find Something to Watch</button>
+
+ </div>
+ <!-- END FORM -->
+
+
+<!-- RESULTS -->
+		<div ng-repeat="movie in movies | limitTo:quantity" class="col-md-6">
+			<div class="thumbnail">
+				<img ng-src="https://image.tmdb.org/t/p/w500//{{ movie.poster_path }}" alt id = "posters">
+				<p class="title">{{ movie.title }} {{movie.name}}</p>
+				<p class= "date">{{ movie.release_date | date:longDate }}{{ movie.first_air_date | date:longDate }}</p>
+        <p class="runtime">{{ movie.runtime }}{{ movie.runtimeTwo }} minutes</p>
+				<p class="rating">{{ movie.vote_average | number: 1 }}★</p>
+    <!-- Modal -->
+				<button type="button" class="btn-btn-info" data-toggle="modal" data-target="#example{{$index}}">See More</button>
+			    <div class="modal" id="example{{$index}}">
+			  	<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">{{ movie.title }}</h4>
+					</div>
+					<div class="modal-body" id="yt-player">
+            <youtube-video video-id="movie.ytlink"></youtube-video>
+            <p class="summary">{{ movie.overview }}</p>
+		     		</div>
+					<div class="modal-footer">
+						<button type="button" class="btn-btn-info" data-dismiss="modal">Close</button>
+					</div>
+				  </div> <!--end modal content-->
+			    </div> <!--modal fade-->
+					<!-- End Modal -->
+		</div><!--end thumbnail-->
+     </div> <!--end results-->
+	</div> <!--end containter-->
+</div><!--end main-->
+<!-- END RESULTS -->
